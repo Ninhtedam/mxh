@@ -1,0 +1,11 @@
+Đăng nhập: 
+
+Sử dụng email và password để đăng nhập 
+
+Đăng ký: 
+
+Nhập username, email, sdt(không bắt buộc), mk, giới tính, sinh nhật. Để hoàn thành cần nhập thông báo từ email. Khi thành công sẽ phát mnd(mã người dùng) dùng để tìm bạn 
+mặc định username trong db là người dùng
+
+Sau khi đăng ký sẽ tự đăng nhập.  
++ khi đăng nhập lần đầu, hệ thống sẽ hiện thông báo có muốn chỉnh sửa trang cá nhân không, có thì ra trang cá nhân 
