@@ -1,0 +1,10 @@
+pending_registrations: bảng đăng ký, xử lý xác thực email
+
+email: địa chỉ email
+otp_hash: băm OTP
+otp_expires_at: thời gian hết hạn OTP
+last_sent_at: thời gian gửi OTP lần cuối (nhấn gửi OTP)
+attempt_count: số lần thử xác thực
+last_attempt_at: thời gian thử xác thực(gửi OTP) lần cuối (nhấn đăng ký)
+created_at: thời gian tạo đăng ký
+updated_at: thời gian cập nhật đăng ký.

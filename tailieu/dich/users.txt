@@ -1,0 +1,19 @@
+users: bảng thông tin người dùng
+
+user_code: mã người dùng
+username: tên người dùng
+email: địa chỉ email
+password_hash: mật khẩu băm
+phone: số điện thoại
+sex: giới tính
+birthday: ngày sinh
+avatar_url: URL ảnh đại diện
+cover_url: URL ảnh bìa
+bio: giới thiệu bản thân
+address: địa chỉ
+role: vai trò
+status: trạng thái tài khoản
+failed_login_count: số lần đăng nhập thất bại
+locked_until: thời gian khóa tài khoản
+created_at: thời gian tạo tài khoản
+updated_at: thời gian cập nhật tài khoản

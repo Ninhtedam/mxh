@@ -1,0 +1,8 @@
+backend
+- ts
+- express: giao tiếp với db
+- nodemailer: gửi email
+- bcrypt: băm OTP
+- dotenv: quản lý biến môi trường
+frontend
+- react: giao diện người dùng

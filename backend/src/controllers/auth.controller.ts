@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { signToken } from "../utils/jwt";
 import crypto from 'crypto';
 
-class UserController {
+class DangkyController {
     async createUser (req: Request, res: Response){
         const {email, username, sex, birthday, phone, address, password} = req.body;
 
@@ -38,4 +38,4 @@ class UserController {
         });
     }
 }
-export default new UserController();
+export default new DangkyController();

@@ -4,7 +4,7 @@ Sử dụng email và password để đăng nhập
 
 Đăng ký: 
 
-Nhập username, email, sdt(không bắt buộc), mk, giới tính, sinh nhật. Để hoàn thành cần nhập thông báo từ email. Khi thành công sẽ phát mnd(mã người dùng) dùng để tìm bạn 
+Nhập username(mặc định người dùng), email(bắt buộc), sdt, mk(bắt buộc), giới tính(enum("Nam", "Nữ")), sinh nhật. Để hoàn thành cần nhập thông báo từ email. Khi thành công sẽ phát mnd(mã người dùng) dùng để tìm bạn 
 mặc định username trong db là người dùng
 
 Sau khi đăng ký sẽ tự đăng nhập.  

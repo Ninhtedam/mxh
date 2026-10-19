@@ -1,0 +1,13 @@
+email
+OTP
+hạn OTP
+tg otp (thg gửi otp)
+số lần
+tg xt (thg gửi đăng ký)
+tạo
+cập nhập
+
+2 nút: gửi OTP và xác thực OTP
+
+kịch bản:
+- nhập email, nhấn gửi otp: hệ thống kiểm tra email trong bảng users
