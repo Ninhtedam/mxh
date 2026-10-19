@@ -1,18 +1,17 @@
 import EmailModel from "../models/email.model";
 import UserModel from "../models/user.model";
 import crypto from 'crypto';
+import {generateOtp, hashOtp} from '../utils/otp'
 import { signRegisterToken } from "../utils/jwt";
 
-async function otp (email:string){
-    
-}
-
 class EmailService {
-    async btnOtp(email: string, otpHash: string){
+    async btnOtp(email: string){
         const findByEmailUsers = await UserModel.findByEmail(email);
         if (findByEmailUsers)
             throw {status: 400, message: "Email đã được đăng ký"};
-
+        const otp = generateOtp();
+        const otpHash = hashOtp(otp);
+        
         const findByEmailPr = await EmailModel.findByEmail(email);
         if (!findByEmailPr){
             const createOtp = await EmailModel.createOtp(email, otpHash);
@@ -22,7 +21,7 @@ class EmailService {
         else{
             const lsa = findByEmailPr.lsa;
             if (lsa>=0 && lsa<10){
-                throw {status: 429, message: "Vui lòng đợi ${10 - lsa}s để gửi lại OTP"};
+                throw {status: 429, message: `Vui lòng đợi ${10 - lsa}s để gửi lại OTP`};
             }
             else if (lsa<0){
                 throw {status: 429, message: "Nhập sai quá nhiều. Vui lòng chờ 30 phút"};
@@ -57,9 +56,8 @@ class EmailService {
                 if (oea>0)
                     throw {status: 410, message: "OTP quá hạn, vui lòng nhấn gửi OTP để nhận mã mới"}
                 else{
-                    const otpHash = crypto.createHash('sha256').update(otp).digest('hex');
 
-                    if (otpHash===findByEmailPr.otp_hash){
+                    if (hashOtp(otp)===findByEmailPr.otp_hash){
                         const prDrop = await EmailModel.prDrop(email);
                         if (!prDrop){
                             throw {status: 500, message: "Lỗi máy chủ"};

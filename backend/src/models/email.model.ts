@@ -53,7 +53,7 @@ class EmailModel{
     async prFailed5 (email:string){
         const [result] = await pool.execute<ResultSetHeader>(
             `update pending_registrations
-            set last_sent_at = last_sent_at + interval 30 minute
+            set last_sent_at = now() + interval 30 minute
             where email = ?`, [email]
         );
         return result.affectedRows
