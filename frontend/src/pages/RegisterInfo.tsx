@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
 import RegisterSteps from "../components/RegisterSteps";
 import PasswordInput from "../components/PasswordInput";
-import { authApi, getErrorMessage, VERIFIED_EMAIL_KEY, type RegisterPayload } from "../api/auth";
+import { authApi, getErrorMessage, VERIFIED_EMAIL_KEY, REGISTER_TOKEN_KEY, type RegisterPayload } from "../api/auth";
 
 type Form = {
   username: string;
@@ -34,7 +34,10 @@ function validate(f: Form): Errors {
 // Đăng ký bước 2: thông tin cá nhân (chỉ mật khẩu là bắt buộc)
 export default function RegisterInfo() {
   const navigate = useNavigate();
-  const email = sessionStorage.getItem(VERIFIED_EMAIL_KEY);
+  // Đọc một lần khi mở trang: đăng ký xong sẽ xoá khỏi sessionStorage,
+  // nếu đọc lại mỗi lần render thì trang tự chuyển về bước 1 thay vì vào trang chủ
+  const [email] = useState(() => sessionStorage.getItem(VERIFIED_EMAIL_KEY));
+  const [registerToken] = useState(() => sessionStorage.getItem(REGISTER_TOKEN_KEY));
   const [form, setForm] = useState<Form>({
     username: "",
     sex: "",
@@ -48,7 +51,7 @@ export default function RegisterInfo() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  if (!email) return <Navigate to="/dangky" replace />;
+  if (!email || !registerToken) return <Navigate to="/register" replace />;
 
   function set<K extends keyof Form>(key: K, value: Form[K]) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -60,10 +63,10 @@ export default function RegisterInfo() {
     setError("");
     const errs = validate(form);
     setErrors(errs);
-    if (Object.keys(errs).length || !email) return;
+    if (Object.keys(errs).length || !registerToken) return;
 
     const payload: RegisterPayload = {
-      email,
+      registerToken,
       password: form.password,
       username: form.username.trim() || undefined,
       sex: form.sex || undefined,
@@ -76,6 +79,7 @@ export default function RegisterInfo() {
     try {
       const data = await authApi.register(payload);
       sessionStorage.removeItem(VERIFIED_EMAIL_KEY);
+      sessionStorage.removeItem(REGISTER_TOKEN_KEY);
       localStorage.setItem("token", data.token);
       navigate("/", { replace: true, state: { firstLogin: true } });
     } catch (err) {
@@ -217,7 +221,7 @@ export default function RegisterInfo() {
       </form>
 
       <p className="auth__foot">
-        <Link to="/dangky">← Quay lại bước 1</Link>
+        <Link to="/register">← Quay lại bước 1</Link>
       </p>
     </AuthLayout>
   );

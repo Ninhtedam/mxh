@@ -1,23 +1,4 @@
-import { useNavigate } from "react-router-dom";
-import Logo from "../components/Logo";
-
+// Trang chủ tạm: để trắng, đăng nhập / đăng ký thành công sẽ vào đây
 export default function Home() {
-  const navigate = useNavigate();
-
-  function logout() {
-    localStorage.removeItem("token");
-    navigate("/dangnhap", { replace: true });
-  }
-
-  return (
-    <>
-      <header className="topbar">
-        <Logo size={32} />
-        <button className="btn btn--outline" onClick={logout}>
-          Đăng xuất
-        </button>
-      </header>
-      <div className="page">Trang chủ</div>
-    </>
-  );
+  return <div className="home-blank" />;
 }

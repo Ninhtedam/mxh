@@ -66,7 +66,7 @@ export default function Login() {
           <label className="check">
             <input type="checkbox" defaultChecked /> Ghi nhớ đăng nhập
           </label>
-          <Link to="/quen-mat-khau">Quên mật khẩu?</Link>
+          <Link to="/forgot-password">Quên mật khẩu?</Link>
         </div>
 
         <button className="btn btn--primary btn--block" disabled={loading}>
@@ -76,7 +76,7 @@ export default function Login() {
       </form>
 
       <p className="auth__foot">
-        Chưa có tài khoản? <Link to="/dangky">Đăng ký</Link>
+        Chưa có tài khoản? <Link to="/register">Đăng ký</Link>
       </p>
     </AuthLayout>
   );

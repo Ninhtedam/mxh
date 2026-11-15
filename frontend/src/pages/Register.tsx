@@ -3,9 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
 import RegisterSteps from "../components/RegisterSteps";
 import OtpInput from "../components/OtpInput";
-import { authApi, getErrorMessage, EMAIL_REGEX, VERIFIED_EMAIL_KEY } from "../api/auth";
+import { authApi, getErrorMessage, EMAIL_REGEX, VERIFIED_EMAIL_KEY, REGISTER_TOKEN_KEY } from "../api/auth";
 
-const RESEND_SECONDS = 60;
+// Khớp với thời gian chờ giữa hai lần gửi ở backend (auth.service.ts)
+const RESEND_SECONDS = 10;
 const OTP_LENGTH = 6;
 
 // Đăng ký bước 1: nhập email -> gửi OTP -> nhập OTP
@@ -59,9 +60,10 @@ export default function Register() {
 
     setLoading(true);
     try {
-      await authApi.verifyOtp(email.trim(), otp);
+      const { registerToken } = await authApi.verifyOtp(email.trim(), otp);
       sessionStorage.setItem(VERIFIED_EMAIL_KEY, email.trim());
-      navigate("/dangky/thong-tin");
+      sessionStorage.setItem(REGISTER_TOKEN_KEY, registerToken);
+      navigate("/register/info");
     } catch (err) {
       setError(getErrorMessage(err, "Mã OTP không đúng"));
       setOtp("");
@@ -143,7 +145,7 @@ export default function Register() {
       )}
 
       <p className="auth__foot">
-        Đã có tài khoản? <Link to="/dangnhap">Đăng nhập</Link>
+        Đã có tài khoản? <Link to="/login">Đăng nhập</Link>
       </p>
     </AuthLayout>
   );
