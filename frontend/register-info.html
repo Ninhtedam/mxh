@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Chưa xác thực email (bước 1) thì quay lại bước 1 -->
+    <script>
+      if (!sessionStorage.getItem("register_email") || !sessionStorage.getItem("register_token"))
+        location.replace("/register");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/js/logo.js" defer></script>
+    <script src="/js/common.js" defer></script>
+    <script src="/js/pages/register-info.js" defer></script>
+    <title>Thông tin cá nhân · mxh</title>
+  </head>
+  <body>
+    <div class="auth">
+      <aside class="auth__brand"></aside>
+      <main class="auth__main">
+        <div class="auth__card">
+          <div class="auth__mobile-logo"></div>
+
+          <div id="steps"></div>
+          <div class="auth__head">
+            <h2>Thông tin cá nhân</h2>
+            <p>Đăng ký cho <strong id="reg-email"></strong>. Các mục không bắt buộc có thể bổ sung sau.</p>
+          </div>
+
+          <form id="info-form" class="form" novalidate>
+            <div id="error" class="alert alert--error" hidden></div>
+
+            <label class="field">
+              <span class="field__label">Tên hiển thị<span class="opt">(không bắt buộc)</span></span>
+              <input id="username" class="input" placeholder="Người dùng" maxlength="50" autocomplete="nickname" autofocus />
+            </label>
+
+            <div class="form__row">
+              <div class="field">
+                <span class="field__label">Giới tính<span class="opt">(không bắt buộc)</span></span>
+                <div class="radio-group" role="radiogroup">
+                  <label class="radio"><input type="radio" name="sex" value="Nam" />Nam</label>
+                  <label class="radio"><input type="radio" name="sex" value="Nữ" />Nữ</label>
+                </div>
+              </div>
+
+              <label class="field">
+                <span class="field__label">Ngày sinh<span class="opt">(không bắt buộc)</span></span>
+                <input id="birthday" type="date" class="input" />
+              </label>
+            </div>
+
+            <label class="field">
+              <span class="field__label">Số điện thoại<span class="opt">(không bắt buộc)</span></span>
+              <input id="phone" type="tel" inputmode="numeric" class="input" placeholder="0912345678" maxlength="11" autocomplete="tel" />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Địa chỉ<span class="opt">(không bắt buộc)</span></span>
+              <input id="address" class="input" placeholder="Quận/Huyện, Tỉnh/Thành phố" maxlength="255" autocomplete="street-address" />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Mật khẩu<span class="req">*</span></span>
+              <div class="input-group">
+                <input id="password" class="input" type="password" autocomplete="new-password" placeholder="Ít nhất 6 ký tự" />
+                <button type="button" class="input-group__btn" tabindex="-1">Hiện</button>
+              </div>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Nhập lại mật khẩu<span class="req">*</span></span>
+              <div class="input-group">
+                <input id="confirm-password" class="input" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu" />
+                <button type="button" class="input-group__btn" tabindex="-1">Hiện</button>
+              </div>
+            </label>
+
+            <button id="submit" class="btn btn--primary btn--block">Hoàn tất đăng ký</button>
+          </form>
+
+          <p class="auth__foot"><a href="/register">← Quay lại bước 1</a></p>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

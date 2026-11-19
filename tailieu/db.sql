@@ -31,6 +31,7 @@ CREATE TABLE users (
   role                VARCHAR(20)  NOT NULL DEFAULT 'user',    -- user | admin
   status              VARCHAR(20)  NOT NULL DEFAULT 'active',  -- active | locked | deactivated
   failed_login_count  INT NOT NULL DEFAULT 0,
+  last_failed_login_at DATETIME,                        -- lần nhập sai mật khẩu gần nhất
   locked_until        DATETIME,
   last_login_at       DATETIME,
   created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

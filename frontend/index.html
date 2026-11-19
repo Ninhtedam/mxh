@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Chưa đăng nhập thì chuyển về trang đăng nhập -->
+    <script>
+      if (!localStorage.getItem("token")) location.replace("/login");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/home.css" />
+    <script src="/js/logo.js" defer></script>
+    <script src="/js/common.js" defer></script>
+    <script src="/js/pages/home.js" defer></script>
+    <title>Bảng tin · mxh</title>
+  </head>
+  <body class="home">
+    <!-- Bộ icon SVG dùng chung: <svg class="icon"><use href="#i-home" /></svg> -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5" /><path d="M5 9.5V21h14V9.5" /><path d="M9.5 21v-6h5v6" /></symbol>
+        <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></symbol>
+        <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></symbol>
+        <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></symbol>
+        <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></symbol>
+        <symbol id="i-comment" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></symbol>
+        <symbol id="i-share" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><path d="m16 6-4-4-4 4" /><path d="M12 2v13" /></symbol>
+        <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21" /></symbol>
+        <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><path d="M9 9h.01M15 9h.01" /></symbol>
+        <symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></symbol>
+        <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" /></symbol>
+        <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6" /></symbol>
+        <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /></symbol>
+        <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M20 21a8 8 0 0 0-16 0" /></symbol>
+        <symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M19 8v6M22 11h-6" /></symbol>
+        <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></symbol>
+        <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M2 12h20" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></symbol>
+      </defs>
+    </svg>
+
+    <a class="skip-link" href="#feed">Bỏ qua tới bảng tin</a>
+
+    <!-- ===== Thanh trên cùng ===== -->
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a href="/" class="topbar__logo" aria-label="mxh - Trang chủ" data-logo></a>
+
+        <form class="search" role="search" id="search-form">
+          <svg class="icon search__icon" aria-hidden="true"><use href="#i-search" /></svg>
+          <input id="search-input" class="search__input" type="search" placeholder="Tìm bạn bằng mã người dùng" aria-label="Tìm bạn bằng mã người dùng" autocomplete="off" />
+        </form>
+
+        <nav class="topbar__nav" aria-label="Điều hướng chính">
+          <a href="/" class="icon-btn is-active" aria-label="Bảng tin" aria-current="page">
+            <svg class="icon" aria-hidden="true"><use href="#i-home" /></svg>
+          </a>
+          <a href="#" class="icon-btn" aria-label="Bạn bè" data-soon>
+            <svg class="icon" aria-hidden="true"><use href="#i-users" /></svg>
+          </a>
+          <a href="#" class="icon-btn" aria-label="Tin nhắn" data-soon>
+            <svg class="icon" aria-hidden="true"><use href="#i-message" /></svg>
+          </a>
+          <a href="#" class="icon-btn" aria-label="Thông báo" data-soon>
+            <svg class="icon" aria-hidden="true"><use href="#i-bell" /></svg>
+          </a>
+        </nav>
+
+        <div class="menu">
+          <button class="avatar-btn" id="menu-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="user-menu" aria-label="Tài khoản">
+            <span class="avatar avatar--sm" data-me-avatar></span>
+          </button>
+          <div class="menu__panel" id="user-menu" role="menu" hidden>
+            <div class="menu__head">
+              <span class="avatar" data-me-avatar></span>
+              <div class="menu__who">
+                <strong data-me-name>…</strong>
+                <span data-me-code></span>
+              </div>
+            </div>
+            <a href="#" class="menu__item" role="menuitem" data-soon>
+              <svg class="icon" aria-hidden="true"><use href="#i-user" /></svg>Trang cá nhân
+            </a>
+            <a href="#" class="menu__item" role="menuitem" data-soon>
+              <svg class="icon" aria-hidden="true"><use href="#i-settings" /></svg>Cài đặt
+            </a>
+            <button class="menu__item menu__item--danger" role="menuitem" id="logout-btn">
+              <svg class="icon" aria-hidden="true"><use href="#i-logout" /></svg>Đăng xuất
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <!-- ===== Cột trái ===== -->
+      <aside class="sidebar sidebar--left" aria-label="Lối tắt">
+        <a href="#" class="profile-card" data-soon>
+          <span class="avatar avatar--lg" data-me-avatar></span>
+          <span class="profile-card__text">
+            <strong data-me-name>…</strong>
+            <span data-me-code></span>
+          </span>
+        </a>
+
+        <nav class="side-nav">
+          <a href="/" class="side-nav__item is-active" aria-current="page">
+            <svg class="icon" aria-hidden="true"><use href="#i-home" /></svg>Bảng tin
+          </a>
+          <a href="#" class="side-nav__item" data-soon>
+            <svg class="icon" aria-hidden="true"><use href="#i-users" /></svg>Bạn bè
+          </a>
+          <a href="#" class="side-nav__item" data-soon>
+            <svg class="icon" aria-hidden="true"><use href="#i-message" /></svg>Tin nhắn
+          </a>
+          <a href="#" class="side-nav__item" data-soon>
+            <svg class="icon" aria-hidden="true"><use href="#i-bell" /></svg>Thông báo
+          </a>
+          <a href="#" class="side-nav__item" data-soon>
+            <svg class="icon" aria-hidden="true"><use href="#i-bookmark" /></svg>Đã lưu
+          </a>
+          <a href="#" class="side-nav__item" data-soon>
+            <svg class="icon" aria-hidden="true"><use href="#i-settings" /></svg>Cài đặt
+          </a>
+        </nav>
+      </aside>
+
+      <!-- ===== Bảng tin ===== -->
+      <main class="feed" id="feed" tabindex="-1">
+        <!-- Ô đăng bài -->
+        <form class="card composer" id="composer">
+          <div class="composer__row">
+            <span class="avatar" data-me-avatar></span>
+            <label class="sr-only" for="composer-text">Nội dung bài viết</label>
+            <textarea id="composer-text" class="composer__input" rows="1" maxlength="2000" placeholder="Bạn đang nghĩ gì?"></textarea>
+          </div>
+          <div class="composer__bar">
+            <div class="composer__tools">
+              <button type="button" class="tool-btn" data-soon>
+                <svg class="icon icon--green" aria-hidden="true"><use href="#i-image" /></svg><span>Ảnh/Video</span>
+              </button>
+              <button type="button" class="tool-btn" data-soon>
+                <svg class="icon icon--amber" aria-hidden="true"><use href="#i-smile" /></svg><span>Cảm xúc</span>
+              </button>
+              <label class="privacy">
+                <span class="sr-only">Ai xem được</span>
+                <select id="composer-privacy" class="privacy__select">
+                  <option value="public">Công khai</option>
+                  <option value="friends">Bạn bè</option>
+                  <option value="private">Chỉ mình tôi</option>
+                </select>
+              </label>
+            </div>
+            <button class="btn btn--primary composer__submit" id="composer-submit" disabled>Đăng</button>
+          </div>
+        </form>
+
+        <!-- Tab bảng tin -->
+        <div class="tabs" role="tablist" aria-label="Loại bảng tin">
+          <button class="tabs__item is-active" role="tab" aria-selected="true" data-tab="all">Dành cho bạn</button>
+          <button class="tabs__item" role="tab" aria-selected="false" data-tab="friends">Bạn bè</button>
+        </div>
+
+        <div id="posts" class="posts" aria-live="polite"></div>
+
+        <!-- Cuộn tới đây thì tải thêm bài -->
+        <div id="feed-sentinel" class="feed__status">
+          <span class="spinner spinner--dark" aria-hidden="true"></span>
+          <span>Đang tải thêm bài viết…</span>
+        </div>
+        <p id="feed-end" class="feed__status" hidden>Bạn đã xem hết bài viết mới.</p>
+      </main>
+
+      <!-- ===== Cột phải ===== -->
+      <aside class="sidebar sidebar--right" aria-label="Bạn bè">
+        <section class="card panel">
+          <h2 class="panel__title">Lời mời kết bạn <span class="panel__count" id="request-count"></span></h2>
+          <ul class="people" id="requests"></ul>
+        </section>
+
+        <section class="card panel">
+          <h2 class="panel__title">Gợi ý kết bạn</h2>
+          <ul class="people" id="suggestions"></ul>
+        </section>
+
+        <p class="site-foot">© <span id="year"></span> mxh · Quyền riêng tư · Điều khoản</p>
+      </aside>
+    </div>
+
+    <!-- ===== Thanh dưới (điện thoại) ===== -->
+    <nav class="bottom-nav" aria-label="Điều hướng chính">
+      <a href="/" class="bottom-nav__item is-active" aria-current="page">
+        <svg class="icon" aria-hidden="true"><use href="#i-home" /></svg><span>Bảng tin</span>
+      </a>
+      <a href="#" class="bottom-nav__item" data-soon>
+        <svg class="icon" aria-hidden="true"><use href="#i-users" /></svg><span>Bạn bè</span>
+      </a>
+      <button class="bottom-nav__item bottom-nav__item--create" id="mobile-create" aria-label="Tạo bài viết">
+        <svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>
+      </button>
+      <a href="#" class="bottom-nav__item" data-soon>
+        <svg class="icon" aria-hidden="true"><use href="#i-bell" /></svg><span>Thông báo</span>
+      </a>
+      <a href="#" class="bottom-nav__item" data-soon>
+        <svg class="icon" aria-hidden="true"><use href="#i-message" /></svg><span>Tin nhắn</span>
+      </a>
+    </nav>
+
+    <div class="toast" id="toast" role="status" hidden></div>
+  </body>
+</html>

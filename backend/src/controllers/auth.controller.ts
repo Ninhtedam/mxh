@@ -1,41 +1,62 @@
-import UserModel from "../models/user.model"
+import EmailService from "../service/auth.service"
 import { Request, Response } from "express";
-import bcrypt from "bcryptjs";
-import { signToken } from "../utils/jwt";
-import crypto from 'crypto';
 
-class DangkyController {
-    async createUser (req: Request, res: Response){
-        const {email, username, sex, birthday, phone, address, password} = req.body;
+const normalizeEmail = (email: unknown) => String(email ?? "").trim().toLowerCase();
+const normalizePassword = (password: unknown) => String(password ?? "").trim();
+const handleError = (res: Response, err: any) => {
+    if (err?.status)
+        return res.status(err.status).json({ message: err.message });
+    if (err?.code === "ER_DUP_ENTRY")
+        return res.status(409).json({ message: "Email đã được đăng ký" });
+    console.error(err);
+    return res.status(500).json({ message: "Lỗi máy chủ" });
+};
 
-        if (!email || !password){
-            return res.status(400).json({ message: "Vui lòng nhập đủ email và password" });
-        }
-        if (! / ^ \S+ @ \S+ \. \S+ $ /.test(email)){
-            return res.status(400).json({ message: "Email không hợp lệ" });
-        }
-        if (password.length < 6) {
-            return res.status(400).json({ message: "Mật khẩu phải từ 6 ký tự" });
-        }
 
-        if (await UserModel.findByEmail(email)) {
-            return res.status(409).json({ message: "Email đã được sử dụng" });
-        }
+class AuthController {
+    
+    async btnOtp(req: Request, res: Response) {
+        try {
+            await EmailService.btnOtp(normalizeEmail(req.body.email));
+            res.json({ message: "Mã OTP đã được gửi tới email của bạn" });
+        } catch (err) { handleError(res, err); }
+    }
 
-        let mnd;
-        do{
-            mnd = crypto.randomBytes(5).toString('hex').toUpperCase();
-        }while(await UserModel.findMnd(mnd))
+    async takeEmailToken(req: Request, res: Response) {
+        try {
+            const { token } = await EmailService.takeEmailToken(normalizeEmail(req.body.email), String(req.body.otp ?? ""));
+            res.json({ message: "Xác thực email thành công", registerToken: token });
+        } catch (err) { handleError(res, err); }
+    }
 
-        const passwordHash = await bcrypt.hash(password, 10);
-        const userId = await UserModel.createUser(email, username, mnd, sex, birthday, phone,address, passwordHash);
+    async createUser(req: Request, res: Response) {
+        try {
+            const { registerToken, password,...data } = req.body;
+            const pw = normalizePassword(password);
+            const result = await EmailService.createUser(registerToken,pw,data);
+            res.status(201).json({ message: "Đăng ký thành công", ...result });
+        } catch (err) { handleError(res, err); }
+    }
 
-        const token = signToken({ userId});
-        res.status(201).json({
-            message: "Đăng ký thành công",
-            token,
-            user: {id:userId,email},
-        });
+    async forgotPassword(req: Request, res: Response){
+        try {
+            await EmailService.forgotPassword(normalizeEmail(req.body.email));
+            res.json({ message: "Mã OTP đã được gửi tới email của bạn" });
+        } catch (err) { handleError(res, err); }
+    }
+
+    async resetPassword(req: Request, res: Response){
+        try {
+            await EmailService.resetPassword(String(req.body.resetToken ?? ""), normalizePassword(req.body.password));
+            res.json({ message: "Đổi mật khẩu thành công" });
+        } catch (err) { handleError(res, err); }
+    }
+
+    async login(req: Request, res: Response){
+        try {
+            const result = await EmailService.login(normalizeEmail(req.body.email),normalizePassword(req.body.password));
+            res.json({ message: "Đăng nhập thành công", ...result  });
+        } catch (err) { handleError(res, err); }
     }
 }
-export default new DangkyController();
+export default new AuthController();
