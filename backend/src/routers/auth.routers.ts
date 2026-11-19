@@ -1,7 +1,15 @@
 import { Router } from "express";
-import DangkyController from "../controllers/auth.controller";
+import AuthController from "../controllers/auth.controller";
 
 const router = Router();
-router.post("/dangky",DangkyController.createUser);
+
+router.post("/send-otp", AuthController.btnOtp);
+router.post("/verify-otp", AuthController.takeEmailToken);
+router.post("/register", AuthController.createUser);
+
+router.post("/login", AuthController.login);
+
+router.post("/forgot-password/send-otp", AuthController.forgotPassword);
+router.post("/forgot-password/reset", AuthController.resetPassword);
 
 export default router;

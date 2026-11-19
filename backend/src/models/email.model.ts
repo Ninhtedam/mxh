@@ -16,8 +16,8 @@ class EmailModel{
 
     async createOtp (email: string, otpHash: string){
         const [result] = await pool.execute<ResultSetHeader>(
-            `insert into pending_registrations (email, otp_hash, otp_expires_at, last_sent_at, attempt_count, last_attempt_at)
-            values (?, ?, now() + interval 10 minute, now(), 0, now())`,
+            `insert into pending_registrations (email, otp_hash, otp_expires_at, last_sent_at, attempt_count)
+            values (?, ?, now() + interval 10 minute, now(), 0)`,
             [email, otpHash]
         );
         return result.affectedRows

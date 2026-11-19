@@ -29,11 +29,12 @@ a { color: var(--primary); text-decoration: none; }
 a:hover { text-decoration: underline; }
 button, input, select { font: inherit; color: inherit; }
 
+[hidden] { display: none !important; }
+
 /* ---------- Logo ---------- */
 /* --logo-bg phải trùng màu nền nơi đặt logo (để tách bàn tay khỏi nét chữ) */
 .logo { display: block; flex-shrink: 0; color: var(--primary); --logo-bg: var(--bg); }
 .logo--inverse { color: #fff; --logo-bg: var(--primary); }
-.topbar .logo { --logo-bg: var(--surface); }
 
 /* ---------- Layout trang xác thực ---------- */
 .auth {
@@ -139,6 +140,7 @@ button, input, select { font: inherit; color: inherit; }
 .btn--outline { background: var(--surface); border-color: var(--border); color: var(--text); }
 .btn--outline:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
 .btn--block { width: 100%; }
+a.btn:hover { text-decoration: none; }
 .btn:disabled { opacity: .55; cursor: not-allowed; }
 
 .link-btn { border: 0; background: none; padding: 0; color: var(--primary); font-weight: 600; cursor: pointer; }
@@ -148,9 +150,7 @@ button, input, select { font: inherit; color: inherit; }
 .alert--error { background: var(--danger-soft); border-color: var(--danger); color: var(--danger); }
 .alert--success { background: var(--success-soft); border-color: var(--success); color: var(--success); }
 
-.form__meta { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
-.check { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
-.check input { accent-color: var(--primary); width: 16px; height: 16px; }
+.form__meta { display: flex; justify-content: flex-end; align-items: center; font-size: 14px; }
 
 .divider { display: flex; align-items: center; gap: 12px; color: var(--text-muted); font-size: 13px; }
 .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
@@ -176,6 +176,5 @@ button, input, select { font: inherit; color: inherit; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ---------- Home tạm ---------- */
-.topbar { height: 56px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
-.page { max-width: 640px; margin: 32px auto; padding: 0 16px; }
+/* ---------- Trang chủ tạm (để trắng) ---------- */
+.home-blank { min-height: 100svh; background: var(--surface); }
